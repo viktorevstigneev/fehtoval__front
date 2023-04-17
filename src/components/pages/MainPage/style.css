@@ -1,0 +1,44 @@
+.home__main {
+	background: url('../../../img/bg.jpg') 50% no-repeat;
+	background-size: cover;
+	/* background: black; */
+	width: 100%;
+	height: 100%;
+	border-top: 1px solid transparent;
+}
+
+.home__title {
+	text-align: center;
+	color: #fff;
+	margin-top: 170px;
+	font-family: AmaticSC;
+	font-size: 60px;
+}
+
+.home_caption {
+	text-align: center;
+	color: #fff;
+	font-family: AmaticSC;
+	font-size: 60px;
+}
+
+.home__new-container {
+	width: 200px;
+	margin: 0 auto;
+	background: #ffffffc5;
+	color: rgb(0, 0, 0);
+	padding: 40px;
+	border-radius: 20px;
+	border-bottom-right-radius: 0;
+
+	position: relative;
+}
+
+.home__new-container::after {
+	content: '';
+	position: absolute;
+	border: 15px solid transparent;
+	border-top: 25px solid #ffffffc5;
+	right:  0;
+	bottom: -40px;
+}
