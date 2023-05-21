@@ -3,8 +3,9 @@
 	background-size: cover;
 	/* background: black; */
 	width: 100%;
-	height: 100%;
+	min-height: 100%;
 	border-top: 1px solid transparent;
+	padding-bottom: 80px;
 }
 
 .home__title {
@@ -23,6 +24,7 @@
 }
 
 .home__new-container {
+	display: block;
 	width: 200px;
 	margin: 0 auto;
 	background: #ffffffc5;
@@ -39,6 +41,34 @@
 	position: absolute;
 	border: 15px solid transparent;
 	border-top: 25px solid #ffffffc5;
-	right:  0;
+	right: 0;
 	bottom: -40px;
+}
+
+.home__new-text {
+	resize: none;
+	display: block;
+
+	/* border: none; */
+	background: transparent;
+	width: 100%;
+	height: 100px;
+}
+
+.home__new-btn{
+	padding: 10px;
+	display: block;
+	background: #a330a3;
+	border-radius: 5px;
+	color: #fff;
+	cursor: pointer;
+	border: none;
+	margin-top: 10px;
+}
+
+
+.home_desc{
+	color: black;
+	text-transform: uppercase;
+	text-align: center;
 }

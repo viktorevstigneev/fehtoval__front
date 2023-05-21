@@ -10,17 +10,20 @@ import { API_URL } from '../../../constants';
 import axios from 'axios';
 import av from '../../../img/av.png';
 
-const OnePage = ({user}) => {
+const OnePage = ({ user }) => {
 	const { id } = useParams();
-
 
 	const [activeCard, setActiveCard] = useState();
 	const [text, setText] = useState();
-	
+
 	const [isEdit, setIsEdit] = useState(false);
 
 	const [cardPrice, setCardPrice] = useState(activeCard && activeCard?.price);
+
 	const [cardDesc, setCardDesc] = useState(activeCard && activeCard?.description);
+	console.log('activeCard: ', activeCard);
+	const [cardName, setCardName] = useState(activeCard && activeCard?.name);
+
 	const [file, setFile] = useState('');
 
 	useEffect(() => {
@@ -32,6 +35,12 @@ const OnePage = ({user}) => {
 		getBenners();
 		// setActiveCard(cardsData.find((item) => item._id == id));
 	}, []);
+
+	useEffect(() => {
+		setCardPrice(activeCard && activeCard?.price);
+		setCardDesc(activeCard && activeCard?.description);
+		setCardName(activeCard && activeCard?.name);
+	}, [activeCard]);
 	return (
 		<div className="open">
 			{!isEdit ? (
@@ -114,16 +123,27 @@ const OnePage = ({user}) => {
 								onChange={(evt) => setFile(evt.target.files[0])}
 							/>
 						</div>
-						<textarea
-							className="open__description"
-							style={{ resize: 'none', width: '100%' }}
-							type="text"
-							name="description"
-							onChange={(evt) => {
-								setCardDesc(evt.target.value);
-							}}
-							value={cardDesc}
-						></textarea>
+						<div className="open__description-block">
+							<input
+								className="open__name-edit"
+								type="text"
+								name="name"
+								onChange={(evt) => {
+									setCardName(evt.target.value);
+								}}
+								value={cardName}
+							/>
+							<textarea
+								className="open__description-edit"
+								style={{ resize: 'none', width: '100%' }}
+								type="text"
+								name="description"
+								onChange={(evt) => {
+									setCardDesc(evt.target.value);
+								}}
+								value={cardDesc}
+							></textarea>
+						</div>
 					</div>
 					<div className="open__bottom">
 						<p className="open__price">
@@ -163,18 +183,27 @@ const OnePage = ({user}) => {
 					<p className="feedback__content">отзывов нет</p>
 				)}
 			</div>
-			<div className="feedback__form">
-				<textarea className="feedback__text" name="feedback" value={text} onChange={(evt)=>setText(evt.target.value)}></textarea>
-				<button
-					className="feedback_btn"
-					onClick={async (evt) => {
-						axios.post(`${API_URL}/teamAddFeed/${activeCard._id}`, { feedback: text });
-						window.location.reload();
-					}}
-				>
-					отправить отзыв
-				</button>
-			</div>
+			{user && user ? (
+				<div className="feedback__form">
+					<textarea
+						className="feedback__text"
+						name="feedback"
+						value={text}
+						onChange={(evt) => setText(evt.target.value)}
+					></textarea>
+					<button
+						className="feedback_btn"
+						onClick={async (evt) => {
+							axios.post(`${API_URL}/teamAddFeed/${activeCard._id}`, { feedback: text });
+							window.location.reload();
+						}}
+					>
+						отправить отзыв
+					</button>
+				</div>
+			) : (
+				<p className="open__cart-no" align="center">необходимо зарегистрироваться чтобы оставить отзыв</p>
+			)}
 		</div>
 	);
 };

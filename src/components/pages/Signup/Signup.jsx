@@ -47,7 +47,7 @@ const SignUp = ({ user, setUser }) => {
 							required={true}
 						/>
 						<button className="auth__button" type="submit">
-							sign up
+							зарегистрироваться
 						</button>
 
 						<Link className="auth__link" to="/signin">

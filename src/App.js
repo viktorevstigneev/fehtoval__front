@@ -37,9 +37,9 @@ function App() {
 				<Routes>
 					<Route path="/signin" element={<SignInPage user={user} setUser={setUser} />} />
 					<Route path="/signup" element={<SignUpPage user={user} setUser={setUser} />} />
-					<Route path="/" element={<MainPage />} />
+					<Route path="/" element={<MainPage user={user} />} />
 					<Route path="/catalog" element={<ClothesPage />} />
-					<Route path="/thing/:id" element={<OnePage user={user}/>} />
+					<Route path="/thing/:id" element={<OnePage user={user} />} />
 					{/* <Route path="/profile" element={<ProfilePage />} /> */}
 					<Route path="/admin" element={<AdminPage />} />
 					<Route path="/cart" element={<CartPage />} />
