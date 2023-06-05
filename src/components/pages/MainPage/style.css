@@ -12,14 +12,14 @@
 	text-align: center;
 	color: #fff;
 	margin-top: 170px;
-	font-family: AmaticSC;
+	font-family: sans-serif;
 	font-size: 60px;
 }
 
 .home_caption {
 	text-align: center;
 	color: #fff;
-	font-family: AmaticSC;
+	font-family: sans-serif;
 	font-size: 60px;
 }
 
@@ -55,7 +55,7 @@
 	height: 100px;
 }
 
-.home__new-btn{
+.home__new-btn {
 	padding: 10px;
 	display: block;
 	background: #a330a3;
@@ -66,8 +66,7 @@
 	margin-top: 10px;
 }
 
-
-.home_desc{
+.home_desc {
 	color: black;
 	text-transform: uppercase;
 	text-align: center;

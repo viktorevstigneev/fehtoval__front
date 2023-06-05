@@ -51,7 +51,7 @@
 	display: flex;
 }
 .open__description {
-	font-family: AmaticSC;
+	font-family: sans-serif;
 	font-weight: 600;
 	width: 40%;
 	background: transparent;
@@ -62,13 +62,13 @@
 	margin-top: 0;
 }
 
-.open__description-block{
+.open__description-block {
 	/* height: 400px; */
 	width: 40%;
 }
 
 .open__description-edit {
-	font-family: AmaticSC;
+	font-family: sans-serif;
 	font-weight: 600;
 	width: 40%;
 	background: transparent;
@@ -78,12 +78,11 @@
 	height: 200px;
 	margin-top: 10px;
 }
-.open__name-edit{
+.open__name-edit {
 	width: 100%;
 	display: block;
 	background: transparent;
 	color: #ffffff;
-
 }
 .open__name {
 	color: rgb(255, 212, 230);
@@ -116,10 +115,10 @@
 .open__price,
 .open__cart,
 .open__cart-no {
-	font-family: AmaticSC;
+	font-family: sans-serif;
 	font-weight: 600;
 	color: rgb(245, 245, 245);
-	font-size: 24px;
+	font-size: 18px;
 }
 
 .open__cart {
@@ -199,7 +198,7 @@
 	border-radius: 10px;
 	cursor: pointer;
 
-	font-family: AmaticSC;
+	font-family: sans-serif;
 	margin-top: 30px;
 	transition: 1s;
 }

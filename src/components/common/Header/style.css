@@ -40,34 +40,32 @@
 	text-decoration: none;
 
 	text-transform: uppercase;
-	font-family:  AmaticSC;
-	font-size: 26px;
+	font-family: sans-serif;
+	font-size: 20px;
 	border: 1px solid transparent;
 	padding: 10px;
 	transition: 1s;
-	
 }
 
-.header__link:hover{
+.header__link:hover {
 	border-radius: 10px;
 	border: 1px solid #d400ff;
 	color: #d2c9dd;
-	
 }
 
 .cart__link {
-	font-size: 27px;
+	font-size: 20px;
 	position: relative;
 	bottom: 5px;
 }
 
-.header__cart{
+.header__cart {
 	width: 40px;
 }
 
-.cart__amount{
+.cart__amount {
 	position: absolute;
-	font-family: AmaticSC;
+	font-family: sans-serif;
 	left: 25px;
 	top: -10px;
 	/* background: rgb(98, 0, 255); */
@@ -76,7 +74,7 @@
 	height: 20px;
 	border-radius: 100px;
 	padding: 3px 5px;
-	font-size: 28px;
+	font-size: 22px;
 	font-weight: 700;
 }
 
@@ -115,7 +113,7 @@
 	border-bottom-left-radius: 25px;
 	padding: 5px 30px;
 	font-family: Pompiere;
-	font-size: 30px;
+	font-size: 24px;
 }
 .auth__input {
 	width: 100%;
@@ -128,13 +126,13 @@
 
 .auth__input::placeholder {
 	font-family: Pompiere;
-	font-size: 30px;
+	font-size: 24px;
 }
 
 .auth__button {
 	padding: 10px 20px;
 	font-family: Pompiere;
-	font-size: 30px;
+	font-size: 24px;
 	background: rgba(0, 0, 0, 0.767);
 	border: none;
 	border-radius: 25px;
@@ -148,7 +146,7 @@
 
 .auth__next {
 	font-family: Pompiere;
-	font-size: 30px;
+	font-size: 24px;
 
 	cursor: pointer;
 }
@@ -188,7 +186,7 @@
 		border-bottom-left-radius: 15px;
 		padding: 5px 10px;
 		font-family: Pompiere;
-		font-size: 20px;
+		font-size: 18px;
 	}
 
 	.auth__input::placeholder {
@@ -198,7 +196,7 @@
 	.auth__button {
 		padding: 5px 10px;
 
-		font-size: 20px;
+		font-size: 18px;
 
 		border-radius: 15px;
 		margin-top: 20px;

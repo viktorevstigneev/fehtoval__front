@@ -22,12 +22,13 @@ const ClothesPage = () => {
 	const [filteredCards, setFilteredCards] = useState();
 
 	const [filter, setFilter] = useState({
-		maxPrice: 100,
+		maxPrice: 500,
 		minPrice: 0,
 		// sex: ['Female', 'Male'],
-		type: ['Защита','Костюм','Маска' ,'Шпаги' ,'Обувь' ]
+		// type: ['Защита','Костюм','Маска' ,'Шпаги' ,'Обувь' ]
+		type: [],
 	});
-
+	console.log('filter: ', filter);
 	useEffect(() => {
 		const getCurrentUser = async () => {
 			const responseData = await axios
@@ -68,8 +69,8 @@ const ClothesPage = () => {
 		let newArr = arr && arr.filter((item) => item.price > filter.minPrice && item.price < filter.maxPrice);
 		console.log('filter: ', filter);
 
-		newArr = newArr.filter((item) => filter.type.includes(item.typeClothes));
-
+		// newArr = newArr.filter((item) => filter.type.includes(item.typeClothes));
+		newArr = newArr.filter((item) => (filter.type.length == 0 ? item : filter.type.includes(item.typeClothes)));
 		return newArr;
 	};
 
@@ -124,6 +125,13 @@ const ClothesPage = () => {
 															type: Array.from(set),
 														});
 													}
+
+													if (filter.type.length == 0) {
+														setFilter({
+															...filter,
+															type: ['Защита', 'Костюм', 'Маска', 'Шпаги', 'Обувь'],
+														});
+													}
 												}}
 												type="checkbox"
 												id={translate}
@@ -152,8 +160,10 @@ const ClothesPage = () => {
 											<span
 												className="clothes_card--delete"
 												onClick={async (event) => {
+													event.preventDefault();
 													event.stopPropagation();
 													await axios.delete(`${API_URL}/team/${item._id}`, { withCredentials: true });
+													window.location.reload();
 												}}
 											>
 												&times;
@@ -167,7 +177,7 @@ const ClothesPage = () => {
 										/>
 										<p className="clothes__name">{item.name}</p>
 										<div className="clothes__bottom">
-											<p className="clothes__price">Price: {item.price}$</p>
+											<p className="clothes__price">Цена: {item.price}</p>
 										</div>
 									</Link>
 								))
