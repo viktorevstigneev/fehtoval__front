@@ -126,12 +126,12 @@ const ClothesPage = () => {
 														});
 													}
 
-													if (filter.type.length == 0) {
-														setFilter({
-															...filter,
-															type: ['Защита', 'Костюм', 'Маска', 'Шпаги', 'Обувь'],
-														});
-													}
+													// if (filter.type.length == 0) {
+													// 	setFilter({
+													// 		...filter,
+													// 		type: ['Защита', 'Костюм', 'Маска', 'Шпаги', 'Обувь'],
+													// 	});
+													// }
 												}}
 												type="checkbox"
 												id={translate}

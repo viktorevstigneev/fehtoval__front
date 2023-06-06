@@ -22,6 +22,9 @@ const CartPage = () => {
 	const [name, setName] = useState('');
 	const [number, setNumber] = useState('');
 
+	const [amount, setAmount] = useState(1);
+	console.log('amount: ', amount);
+
 	useEffect(() => {
 		const getCurrentUser = async () => {
 			const responseData = await axios
@@ -78,13 +81,19 @@ const CartPage = () => {
 									<img className="cart__image" src={`${API_URL}/getImage/${item.avatar}`} alt="cart" />
 									<p className="cart__price">цена: {item.price}$</p>
 									<i>Кол-во</i>
-									<input type="number" style={{ width: '50px', marginBottom: '10px' }} onChange={(evt) => {
-									
-										if(+evt.target.value > 10){
-											alert("Вы не можете приобрести за один раз более 9 единиц товара")
-											evt.target.value = 9;
-										}
-									}} />
+									<input
+										type="number"
+										value={amount}
+										style={{ width: '50px', marginBottom: '10px' }}
+										onChange={(evt) => {
+											setAmount(+evt.target.value);
+											if (+evt.target.value > 10) {
+												alert('Вы не можете приобрести за один раз более 9 единиц товара');
+												evt.target.value = 9;
+												setAmount(9);
+											}
+										}}
+									/>
 									<button
 										className="cart__delete"
 										onClick={async () => {
@@ -101,7 +110,7 @@ const CartPage = () => {
 						)}
 					</div>
 					<div className="cart__bottom">
-						<p className="cart__summary">Общая стоимость: {sum}$</p>
+						<p className="cart__summary">Общая стоимость: {sum * amount}$</p>
 						{userCart?.length ? (
 							<button className="cart__button" onClick={() => setPay(true)}>
 								заказать
