@@ -1,5 +1,6 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import axios from 'axios';
+import { unstable_batchedUpdates } from 'react-dom';
 // import Cards from 'react-credit-cards';
 // import 'react-credit-cards/es/styles-compiled.css';
 
@@ -23,7 +24,6 @@ const CartPage = () => {
 	const [number, setNumber] = useState('');
 
 	const [amount, setAmount] = useState(1);
-	console.log('amount: ', amount);
 
 	useEffect(() => {
 		const getCurrentUser = async () => {
@@ -43,18 +43,6 @@ const CartPage = () => {
 		getClothes();
 	}, []);
 
-	useEffect(() => {
-		const userCart = cartData && cartData.filter((value) => user?.userCart && user?.userCart.includes(value._id));
-
-		const summa =
-			userCart &&
-			userCart.reduce((sum, elem) => {
-				return sum + +elem.price;
-			}, 0);
-
-		setSum(summa);
-	}, [cartData]);
-
 	const handleModalWindowCloseButtonClick = useCallback((evt) => {
 		evt.preventDefault();
 		setPay(false);
@@ -66,9 +54,28 @@ const CartPage = () => {
 		}
 	}, []);
 
-	const userCart = cartData && cartData.filter((value) => user?.userCart && user?.userCart.includes(value._id));
+	const [userCart, setUserCart] = useState(
+		cartData && cartData.filter((value) => user?.userCart && user?.userCart.includes(value._id))
+	);
+	console.log('userCart: ', userCart);
+
+	useEffect(() => {
+		setUserCart(cartData && cartData.filter((value) => user?.userCart && user?.userCart.includes(value._id)));
+	}, [cartData]);
+	// const userCart = cartData && cartData.filter((value) => user?.userCart && user?.userCart.includes(value._id));
 
 	const userOrder = cartData && cartData.filter((value) => user?.order && user?.order.includes(value._id));
+
+	const usePrevious = (value) => {
+		const ref = useRef();
+		useEffect(() => {
+			ref.current = value;
+		});
+		return ref.current;
+	};
+
+	const prevAmount = usePrevious(amount);
+
 	return (
 		<>
 			<main className="cart">
@@ -76,41 +83,63 @@ const CartPage = () => {
 					<h2 className="cart__title">Корзина пользователя {user?.username}</h2>
 					<div className="cart__content">
 						{userCart?.length ? (
-							userCart.map((item) => (
-								<div className="cart__item">
-									<img className="cart__image" src={`${API_URL}/getImage/${item.avatar}`} alt="cart" />
-									<p className="cart__price">цена: {item.price}$</p>
-									<i>Кол-во</i>
-									<input
-										type="number"
-										value={amount}
-										style={{ width: '50px', marginBottom: '10px' }}
-										onChange={(evt) => {
-											setAmount(+evt.target.value);
-											if (+evt.target.value > 10) {
-												alert('Вы не можете приобрести за один раз более 9 единиц товара');
-												evt.target.value = 9;
-												setAmount(9);
-											}
-										}}
-									/>
-									<button
-										className="cart__delete"
-										onClick={async () => {
-											await axios.patch(`${API_URL}/profileDeleteFromCart`, { productID: item._id, userID: user._id });
-											window.location.reload();
-										}}
-									>
-										убрать
-									</button>
-								</div>
-							))
+							userCart.map((item) => {
+								return (
+									<div className="cart__item">
+										<img className="cart__image" src={`${API_URL}/getImage/${item.avatar}`} alt="cart" />
+										<p className="cart__price">цена: {item.price}$</p>
+										<i>Кол-во</i>
+										<input
+											type="number"
+											max={10}
+											min={1}
+											defaultValue={1}
+											style={{ width: '50px', marginBottom: '10px' }}
+											onChange={(evt) => {
+												setAmount(+evt.target.value);
+
+												userCart.forEach((element) => {
+													if (element._id == item._id) {
+														console.log('amount: ', amount);
+														console.log('+evt.target.value: ', +evt.target.value);
+														if (+evt.target.value > amount) {
+															element.price = +element.price * +evt.target.value;
+														}
+														if (+evt.target.value <= amount) {
+															element.price = +element.price / +amount;
+														}
+													}
+												});
+											}}
+										/>
+										<button
+											className="cart__delete"
+											onClick={async () => {
+												await axios.patch(`${API_URL}/profileDeleteFromCart`, {
+													productID: item._id,
+													userID: user._id,
+												});
+												window.location.reload();
+											}}
+										>
+											убрать
+										</button>
+									</div>
+								);
+							})
 						) : (
 							<p className="empty">в корзине ничего нет</p>
 						)}
 					</div>
 					<div className="cart__bottom">
-						<p className="cart__summary">Общая стоимость: {sum * amount}$</p>
+						<p className="cart__summary">
+							Общая стоимость:{' '}
+							{userCart &&
+								userCart.reduce((sum, elem) => {
+									return sum + +elem.price;
+								}, 0)}
+							$
+						</p>
 						{userCart?.length ? (
 							<button className="cart__button" onClick={() => setPay(true)}>
 								заказать

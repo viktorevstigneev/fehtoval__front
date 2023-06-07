@@ -1,11 +1,17 @@
 import card from '../../../img/card.png';
 
 export const clothesType = [
-	{ id: 'Protect', translate: 'Защита' },
-	{ id: 'Suite', translate: 'Костюм' },
-	{ id: 'Mask', translate: 'Маска' },
-	{ id: 'Knife', translate: 'Шпаги' },
-	{ id: 'Shoes', translate: 'Обувь' },
+	{ id: 'Все товары', translate: 'Все товары' },
+	{ id: 'Рапиры', translate: 'Рапиры' },
+	{ id: 'Шпаги', translate: 'Шпаги' },
+	{ id: 'Сабли', translate: 'Сабли' },
+	{ id: 'Маски', translate: 'Маски' },
+	{ id: 'Костюмы', translate: 'Костюмы' },
+
+	{ id: 'Кроссовки', translate: 'Кроссовки' },
+	{ id: 'Перчатки', translate: 'Перчатки' },
+	{ id: 'Гетры', translate: 'Гетры' },
+	{ id: 'Электро шнуры', translate: 'Электро шнуры' },
 ];
 
 export const sexType = [

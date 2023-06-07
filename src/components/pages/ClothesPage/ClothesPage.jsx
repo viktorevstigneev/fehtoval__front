@@ -18,6 +18,7 @@ const ClothesPage = () => {
 	const [searchValue, setSearchValue] = useState('');
 
 	const [cardData, setCardData] = useState();
+	console.log('cardData: ', cardData);
 
 	const [filteredCards, setFilteredCards] = useState();
 
@@ -28,7 +29,7 @@ const ClothesPage = () => {
 		// type: ['Защита','Костюм','Маска' ,'Шпаги' ,'Обувь' ]
 		type: [],
 	});
-	console.log('filter: ', filter);
+	// console.log('filter: ', filter);
 	useEffect(() => {
 		const getCurrentUser = async () => {
 			const responseData = await axios
@@ -57,28 +58,14 @@ const ClothesPage = () => {
 			const { min, max } = mySlider.value;
 			setMin(min || 0);
 			setMax(max || 500);
-			setFilter({
-				...filter,
-				minPrice: min,
-				maxPrice: max,
-			});
 		});
 	}, []);
 
-	const filterArray = (arr) => {
-		let newArr = arr && arr.filter((item) => item.price > filter.minPrice && item.price < filter.maxPrice);
-		console.log('filter: ', filter);
+	useEffect(() => {
+		let newArr = cardData && cardData.filter((item) => item.price > sliderMin && item.price < sliderMax);
 
-		// newArr = newArr.filter((item) => filter.type.includes(item.typeClothes));
-		newArr = newArr.filter((item) => (filter.type.length == 0 ? item : filter.type.includes(item.typeClothes)));
-		return newArr;
-	};
-
-	const handleApplyFilters = (evt) => {
-		evt.preventDefault();
-
-		setFilteredCards(filterArray(cardData));
-	};
+		setFilteredCards(newArr);
+	}, [sliderMin, sliderMax]);
 
 	const handleSearhChange = (evt) => {
 		setSearchValue(evt.target.value);
@@ -88,7 +75,7 @@ const ClothesPage = () => {
 		<>
 			<main className="clothes">
 				<div className="clothes__container">
-					<form className="Clothes__top" action="" onSubmit={handleApplyFilters}>
+					<form className="Clothes__top" action="">
 						<div className="filter__top">
 							<div className="filter__block">
 								<h2 className="filter__title">Цена</h2>
@@ -101,51 +88,29 @@ const ClothesPage = () => {
 							<div className="filter__block">
 								<h2 className="filter__title">Тип</h2>
 								<div className="filter__wrapper">
-									{clothesType.map(({ id, translate }) => (
-										<div className="filter__item">
-											<input
-												className="filter__checkbox"
-												onChange={(evt) => {
-													const newArr = filter.type;
+									<select
+										name=""
+										id=""
+										onChange={(evt) => {
+											let newArr = cardData && cardData.filter((item) => item.typeClothes === evt.target.value);
 
-													if (evt.target.checked) {
-														newArr.push(evt.target.name);
-														let set = new Set(newArr);
+											setFilteredCards(newArr);
 
-														setFilter({
-															...filter,
-															type: Array.from(set),
-														});
-													} else {
-														newArr.pop(evt.target.name);
-														let set = new Set(newArr);
-
-														setFilter({
-															...filter,
-															type: Array.from(set),
-														});
-													}
-
-													// if (filter.type.length == 0) {
-													// 	setFilter({
-													// 		...filter,
-													// 		type: ['Защита', 'Костюм', 'Маска', 'Шпаги', 'Обувь'],
-													// 	});
-													// }
-												}}
-												type="checkbox"
-												id={translate}
-												name={translate}
-											/>
-											<label className="filter__label" htmlFor={translate}>
+											if (evt.target.value == 'Все товары') {
+												setFilteredCards(cardData);
+											}
+										}}
+									>
+										{clothesType.map(({ id, translate }) => (
+											<option value={translate} className="filter__option">
 												{translate}
-											</label>
-										</div>
-									))}
+											</option>
+										))}
+									</select>
 								</div>
 							</div>
 						</div>
-						<button className="filter__apply">Применить фильтры</button>
+						{/* <button className="filter__apply">Применить фильтры</button> */}
 					</form>
 
 					<input className="filter__search" type="text" placeholder="Поиск товара" onChange={handleSearhChange} />
