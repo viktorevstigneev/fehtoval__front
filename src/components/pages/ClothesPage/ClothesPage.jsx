@@ -61,11 +61,11 @@ const ClothesPage = () => {
 		});
 	}, []);
 
-	useEffect(() => {
-		let newArr = cardData && cardData.filter((item) => item.price > sliderMin && item.price < sliderMax);
+	// useEffect(() => {
+	// 	let newArr = cardData && cardData.filter((item) => item.price > sliderMin && item.price < sliderMax);
 
-		setFilteredCards(newArr);
-	}, [sliderMin, sliderMax]);
+	// 	setFilteredCards(newArr);
+	// }, [sliderMin, sliderMax]);
 
 	const handleSearhChange = (evt) => {
 		setSearchValue(evt.target.value);
@@ -119,6 +119,7 @@ const ClothesPage = () => {
 						{filteredCards ? (
 							filteredCards
 								.filter((item) => searchValue == '' || item?.name.includes(searchValue))
+								.filter((item) => item.price > sliderMin && item.price < sliderMax)
 								.map((item) => (
 									<Link to={`/thing/${item._id}`} className="clothes__card">
 										{user && user.isAdmin && (
